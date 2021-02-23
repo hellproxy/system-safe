@@ -2,16 +2,35 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
-version '1.0-SNAPSHOT'
+group 'com.github.twofour'
+version '1.0.0'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    def jupiterVersion = '5.6.0'
+    def mockitoVersion = '3.7.7'
+    def slf4jVersion = '1.7.30'
+    def junitTestKitVersion = '1.7.1'
+    def assertJVersion = '3.19.0'
+    def lombokVersion = '1.18.16'
+
+    // production dependencies
+    implementation "org.junit.jupiter:junit-jupiter-api:$jupiterVersion"
+
+    // test dependencies
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.slf4j:slf4j-api:$slf4jVersion"
+    testImplementation "org.slf4j:slf4j-log4j12:$slf4jVersion"
+    testImplementation "org.junit.platform:junit-platform-testkit:$junitTestKitVersion"
+    testImplementation "org.assertj:assertj-core:$assertJVersion"
+    testImplementation "org.projectlombok:lombok:$lombokVersion"
+
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$jupiterVersion"
+
+    testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
 test {

@@ -2,5 +2,8 @@
 .idea
 *.iml
 
+# Project output
+build
+
 # Gradle output files
 .gradle
