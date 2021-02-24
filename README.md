@@ -1,3 +1,6 @@
+![build](https://github.com/2four/system-safe/actions/workflows/gradle.yml/badge.svg)
+
+
 # SystemSafe
 
 SystemSafe is a hassle-free JUnit 5 extension that prevents unintended side effects from interactions with
