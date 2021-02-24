@@ -1,1 +1,3 @@
-rootProject.name = 'SystemSafe'
+rootProject.name = 'system-safe'
+include 'system-safe-core'
+include 'system-safe-provider-test'

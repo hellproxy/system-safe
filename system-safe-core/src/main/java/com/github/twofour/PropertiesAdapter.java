@@ -14,244 +14,238 @@ import static java.util.Objects.requireNonNull;
  */
 public class PropertiesAdapter extends Properties {
 
-    private static final ThreadLocalPropertiesStack STACK = new ThreadLocalPropertiesStack();
+    private static final ThreadLocalProperties THREAD_LOCAL_PROPERTIES = new ThreadLocalProperties();
 
-    public static void enterContext() {
-        var local = STACK.get();
-        local.push((Properties) requireNonNull(local.peek()).clone());
-    }
-
-    public static void exitContext() {
-        var local = STACK.get();
-        local.pop();
+    public static void setContext(final Properties properties) {
+        THREAD_LOCAL_PROPERTIES.get().set(properties);
     }
 
     @Override
     public synchronized Object setProperty(String key, String value) {
-        return getStackHead().setProperty(key, value);
+        return getLocalProperties().setProperty(key, value);
     }
 
     @Override
     public synchronized void load(Reader reader) throws IOException {
-        getStackHead().load(reader);
+        getLocalProperties().load(reader);
     }
 
     @Override
     public synchronized void load(InputStream inStream) throws IOException {
-        getStackHead().load(inStream);
+        getLocalProperties().load(inStream);
     }
 
     @Override
     public void save(OutputStream out, String comments) {
-        getStackHead().save(out, comments);
+        getLocalProperties().save(out, comments);
     }
 
     @Override
     public void store(Writer writer, String comments) throws IOException {
-        getStackHead().store(writer, comments);
+        getLocalProperties().store(writer, comments);
     }
 
     @Override
     public void store(OutputStream out, String comments) throws IOException {
-        getStackHead().store(out, comments);
+        getLocalProperties().store(out, comments);
     }
 
     @Override
     public synchronized void loadFromXML(InputStream in) throws IOException, InvalidPropertiesFormatException {
-        getStackHead().loadFromXML(in);
+        getLocalProperties().loadFromXML(in);
     }
 
     @Override
     public void storeToXML(OutputStream os, String comment) throws IOException {
-        getStackHead().storeToXML(os, comment);
+        getLocalProperties().storeToXML(os, comment);
     }
 
     @Override
     public void storeToXML(OutputStream os, String comment, String encoding) throws IOException {
-        getStackHead().storeToXML(os, comment, encoding);
+        getLocalProperties().storeToXML(os, comment, encoding);
     }
 
     @Override
     public void storeToXML(OutputStream os, String comment, Charset charset) throws IOException {
-        getStackHead().storeToXML(os, comment, charset);
+        getLocalProperties().storeToXML(os, comment, charset);
     }
 
     @Override
     public String getProperty(String key) {
-        return getStackHead().getProperty(key);
+        return getLocalProperties().getProperty(key);
     }
 
     @Override
     public String getProperty(String key, String defaultValue) {
-        return getStackHead().getProperty(key, defaultValue);
+        return getLocalProperties().getProperty(key, defaultValue);
     }
 
     @Override
     public Enumeration<?> propertyNames() {
-        return getStackHead().propertyNames();
+        return getLocalProperties().propertyNames();
     }
 
     @Override
     public Set<String> stringPropertyNames() {
-        return getStackHead().stringPropertyNames();
+        return getLocalProperties().stringPropertyNames();
     }
 
     @Override
     public void list(PrintStream out) {
-        getStackHead().list(out);
+        getLocalProperties().list(out);
     }
 
     @Override
     public void list(PrintWriter out) {
-        getStackHead().list(out);
+        getLocalProperties().list(out);
     }
 
     @Override
     public int size() {
-        return getStackHead().size();
+        return getLocalProperties().size();
     }
 
     @Override
     public boolean isEmpty() {
-        return getStackHead().isEmpty();
+        return getLocalProperties().isEmpty();
     }
 
     @Override
     public Enumeration<Object> keys() {
-        return getStackHead().keys();
+        return getLocalProperties().keys();
     }
 
     @Override
     public Enumeration<Object> elements() {
-        return getStackHead().elements();
+        return getLocalProperties().elements();
     }
 
     @Override
     public boolean contains(Object value) {
-        return getStackHead().contains(value);
+        return getLocalProperties().contains(value);
     }
 
     @Override
     public boolean containsValue(Object value) {
-        return getStackHead().containsValue(value);
+        return getLocalProperties().containsValue(value);
     }
 
     @Override
     public boolean containsKey(Object key) {
-        return getStackHead().containsKey(key);
+        return getLocalProperties().containsKey(key);
     }
 
     @Override
     public Object get(Object key) {
-        return getStackHead().get(key);
+        return getLocalProperties().get(key);
     }
 
     @Override
     public synchronized Object put(Object key, Object value) {
-        return getStackHead().put(key, value);
+        return getLocalProperties().put(key, value);
     }
 
     @Override
     public synchronized Object remove(Object key) {
-        return getStackHead().remove(key);
+        return getLocalProperties().remove(key);
     }
 
     @Override
     public synchronized void putAll(Map<?, ?> t) {
-        getStackHead().putAll(t);
+        getLocalProperties().putAll(t);
     }
 
     @Override
     public synchronized void clear() {
-        getStackHead().clear();
+        getLocalProperties().clear();
     }
 
     @Override
     public synchronized String toString() {
-        return getStackHead().toString();
+        return getLocalProperties().toString();
     }
 
     @Override
     public Set<Object> keySet() {
-        return getStackHead().keySet();
+        return getLocalProperties().keySet();
     }
 
     @Override
     public Collection<Object> values() {
-        return getStackHead().values();
+        return getLocalProperties().values();
     }
 
     @Override
     public Set<Map.Entry<Object, Object>> entrySet() {
-        return getStackHead().entrySet();
+        return getLocalProperties().entrySet();
     }
 
     @Override
     public synchronized boolean equals(Object o) {
-        return getStackHead().equals(o);
+        return getLocalProperties().equals(o);
     }
 
     @Override
     public synchronized int hashCode() {
-        return getStackHead().hashCode();
+        return getLocalProperties().hashCode();
     }
 
     @Override
     public Object getOrDefault(Object key, Object defaultValue) {
-        return getStackHead().getOrDefault(key, defaultValue);
+        return getLocalProperties().getOrDefault(key, defaultValue);
     }
 
     @Override
     public synchronized void forEach(BiConsumer<? super Object, ? super Object> action) {
-        getStackHead().forEach(action);
+        getLocalProperties().forEach(action);
     }
 
     @Override
     public synchronized void replaceAll(BiFunction<? super Object, ? super Object, ?> function) {
-        getStackHead().replaceAll(function);
+        getLocalProperties().replaceAll(function);
     }
 
     @Override
     public synchronized Object putIfAbsent(Object key, Object value) {
-        return getStackHead().putIfAbsent(key, value);
+        return getLocalProperties().putIfAbsent(key, value);
     }
 
     @Override
     public synchronized boolean remove(Object key, Object value) {
-        return getStackHead().remove(key, value);
+        return getLocalProperties().remove(key, value);
     }
 
     @Override
     public synchronized boolean replace(Object key, Object oldValue, Object newValue) {
-        return getStackHead().replace(key, oldValue, newValue);
+        return getLocalProperties().replace(key, oldValue, newValue);
     }
 
     @Override
     public synchronized Object replace(Object key, Object value) {
-        return getStackHead().replace(key, value);
+        return getLocalProperties().replace(key, value);
     }
 
     @Override
     public synchronized Object computeIfAbsent(Object key, Function<? super Object, ?> mappingFunction) {
-        return getStackHead().computeIfAbsent(key, mappingFunction);
+        return getLocalProperties().computeIfAbsent(key, mappingFunction);
     }
 
     @Override
     public synchronized Object computeIfPresent(Object key,
                                                 BiFunction<? super Object, ? super Object, ?> remappingFunction) {
-        return getStackHead().computeIfPresent(key, remappingFunction);
+        return getLocalProperties().computeIfPresent(key, remappingFunction);
     }
 
     @Override
     public synchronized Object compute(Object key, BiFunction<? super Object, ? super Object, ?> remappingFunction) {
-        return getStackHead().compute(key, remappingFunction);
+        return getLocalProperties().compute(key, remappingFunction);
     }
 
     @Override
     public synchronized Object merge(Object key,
                                      Object value,
                                      BiFunction<? super Object, ? super Object, ?> remappingFunction) {
-        return getStackHead().merge(key, value, remappingFunction);
+        return getLocalProperties().merge(key, value, remappingFunction);
     }
 
     @Override
@@ -261,10 +255,10 @@ public class PropertiesAdapter extends Properties {
 
     @Override
     public synchronized Object clone() {
-        return getStackHead().clone();
+        return getLocalProperties().clone();
     }
 
-    private Properties getStackHead() {
-        return requireNonNull(STACK.get().peek());
+    private Properties getLocalProperties() {
+        return requireNonNull(THREAD_LOCAL_PROPERTIES.get().get());
     }
 }
