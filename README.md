@@ -1,4 +1,5 @@
 ![build](https://github.com/2four/system-safe/actions/workflows/gradle.yml/badge.svg)
+![coverage](https://img.shields.io/codecov/c/github/2four/system-safe?token=JUMAE6HREY)
 
 
 # SystemSafe
