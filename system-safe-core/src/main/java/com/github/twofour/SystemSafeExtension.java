@@ -1,19 +1,21 @@
 package com.github.twofour;
 
 import org.junit.jupiter.api.extension.*;
+import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 
 import java.util.Properties;
 
-import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.GLOBAL;
+import static org.junit.jupiter.api.extension.ExtensionContext.Namespace.create;
 
 /**
  * @author harrydent
  */
 public class SystemSafeExtension implements BeforeAllCallback,
-        BeforeEachCallback,
-        AfterEachCallback,
-        AfterAllCallback {
+                                            BeforeEachCallback,
+                                            AfterEachCallback,
+                                            AfterAllCallback {
 
+    private static final Namespace NAMESPACE = create(SystemSafeExtension.class);
     private static final String PROPERTIES_KEY = "properties";
     private static final Properties INITIAL_SYSTEM_PROPERTIES;
 
@@ -26,40 +28,37 @@ public class SystemSafeExtension implements BeforeAllCallback,
         return INITIAL_SYSTEM_PROPERTIES;
     }
 
+    static Properties cloneInitialSystemProperties() {
+        return (Properties) INITIAL_SYSTEM_PROPERTIES.clone();
+    }
+
     @Override
     public void beforeAll(final ExtensionContext context) {
-        enterContext(context);
+        var clonedProperties = cloneInitialSystemProperties();
+
+        context.getStore(NAMESPACE).put(PROPERTIES_KEY, clonedProperties);
+        PropertiesAdapter.addProperties(clonedProperties);
     }
 
     @Override
     public void beforeEach(final ExtensionContext context) {
-        enterContext(context);
-    }
-
-    private void enterContext(final ExtensionContext context) {
-        var store = context.getStore(GLOBAL);
-        var parentProperties = store.getOrDefault(PROPERTIES_KEY, Properties.class, INITIAL_SYSTEM_PROPERTIES);
+        var store = context.getStore(NAMESPACE);
+        var parentProperties = store.get(PROPERTIES_KEY, Properties.class);
         var clonedProperties = (Properties) parentProperties.clone();
 
         store.put(PROPERTIES_KEY, clonedProperties);
-        PropertiesAdapter.setContext(clonedProperties);
+        PropertiesAdapter.addProperties(clonedProperties);
     }
 
     @Override
     public void afterEach(final ExtensionContext context) {
-        exitContext(context);
+        context.getStore(NAMESPACE).remove(PROPERTIES_KEY);
+        PropertiesAdapter.removeProperties();
     }
 
     @Override
     public void afterAll(final ExtensionContext context) {
-        exitContext(context);
-    }
-
-    private void exitContext(final ExtensionContext context) {
-        var store = context.getStore(GLOBAL);
-        store.remove(PROPERTIES_KEY);
-
-        var parentProperties = store.getOrDefault(PROPERTIES_KEY, Properties.class, INITIAL_SYSTEM_PROPERTIES);
-        PropertiesAdapter.setContext(parentProperties);
+        context.getStore(NAMESPACE).remove(PROPERTIES_KEY);
+        PropertiesAdapter.removeProperties();
     }
 }

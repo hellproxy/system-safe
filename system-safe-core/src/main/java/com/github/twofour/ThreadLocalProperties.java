@@ -1,14 +1,11 @@
 package com.github.twofour;
 
 import java.util.Properties;
-import java.util.concurrent.atomic.AtomicReference;
-
-import static com.github.twofour.SystemSafeExtension.getInitialSystemProperties;
 
 /**
  * @author harrydent
  */
-public class ThreadLocalProperties extends InheritableThreadLocal<AtomicReference<Properties>> {
+public class ThreadLocalProperties extends InheritableThreadLocal<PropertiesNode> {
 
     /**
      * Supplies a new, clean properties stack based off the System Properties that were set when
@@ -18,9 +15,8 @@ public class ThreadLocalProperties extends InheritableThreadLocal<AtomicReferenc
      * @return the initial properties stack for this thread-local.
      */
     @Override
-    protected AtomicReference<Properties> initialValue() {
-        var properties = (Properties) getInitialSystemProperties().clone();
-        return new AtomicReference<>(properties);
+    protected PropertiesNode initialValue() {
+        return new PropertiesNode();
     }
 
     /**
@@ -31,8 +27,20 @@ public class ThreadLocalProperties extends InheritableThreadLocal<AtomicReferenc
      * @return a deep clone of the parent's properties stack
      */
     @Override
-    protected AtomicReference<Properties> childValue(AtomicReference<Properties> parentValue) {
-        var propertiesClone = (Properties) parentValue.get().clone();
-        return new AtomicReference<>(propertiesClone);
+    protected PropertiesNode childValue(PropertiesNode parentValue) {
+        return new PropertiesNode(parentValue);
+    }
+
+    public Properties getProperties() {
+        return get().getProperties();
+    }
+
+    public void addProperties(final Properties properties) {
+        var head = get().getHead();
+        set(new PropertiesNode(head, properties));
+    }
+
+    public void removeProperties() {
+        get().remove();
     }
 }

@@ -2,7 +2,6 @@ package com.github.twofour;
 
 import jdk.jfr.Description;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.platform.testkit.engine.EngineTestKit;
@@ -10,6 +9,7 @@ import org.junit.platform.testkit.engine.EngineTestKit;
 import java.util.HashMap;
 
 import static com.github.twofour.RepetitionTest.TOTAL_REPETITIONS;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
 /**
@@ -36,6 +36,6 @@ class JUnit5TestKitTest {
 
         var propertiesAfter = new HashMap<>(System.getProperties());
 
-        Assertions.assertThat(propertiesBefore).isNotEmpty().isEqualTo(propertiesAfter);
+        assertThat(propertiesBefore).isNotEmpty().isEqualTo(propertiesAfter);
     }
 }

@@ -11,8 +11,27 @@ ext {
     lombokVersion = '1.18.16'
 }
 
-subprojects {
+allprojects {
     apply plugin: 'java'
+    apply plugin: 'jacoco'
+
+    jacoco {
+        toolVersion = "0.8.3"
+    }
+
+    test {
+        finalizedBy jacocoTestReport
+    }
+
+    jacocoTestReport {
+        dependsOn test
+
+        reports {
+            html.enabled true
+            xml.enabled false
+            csv.enabled true
+        }
+    }
 
     java {
         sourceCompatibility = JavaVersion.VERSION_11
@@ -26,4 +45,11 @@ subprojects {
         mavenLocal()
         mavenCentral()
     }
+}
+
+task jacocoRootReport(type: JacocoReport) {
+    dependsOn = subprojects.test
+    sourceDirectories.setFrom files(subprojects.sourceSets.main.allSource.srcDirs)
+    classDirectories.setFrom files(subprojects.sourceSets.main.output)
+    executionData.setFrom files(subprojects.jacocoTestReport.executionData)
 }

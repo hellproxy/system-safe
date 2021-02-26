@@ -1,15 +1,14 @@
 import com.github.twofour.PropertiesAdapter;
-import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author harrydent
  */
-@TestMethodOrder(OrderAnnotation.class)
+@DisplayName("Test SystemSafeExtension is automatically configured using junit-platform.properties")
 class SystemSafeNoConfigurationTest {
 
     private static final String PROPERTY_NAME = "foo";
@@ -17,12 +16,14 @@ class SystemSafeNoConfigurationTest {
 
     @Test
     @Order(1)
+    @DisplayName("check that System properties are a PropertiesAdapter instance")
     void test_systemProperties_isStubbed() {
         assertThat(System.getProperties()).isInstanceOf(PropertiesAdapter.class);
     }
 
     @Test
     @Order(2)
+    @DisplayName("check that property 'foo' is unset")
     void test_systemProperty_isUnset() {
         assertThat(System.getProperty(PROPERTY_NAME)).isNull();
 
@@ -31,6 +32,7 @@ class SystemSafeNoConfigurationTest {
 
     @Test
     @Order(3)
+    @DisplayName("check that property 'foo' is unset after being set in previous test")
     void test_systemProperty_isUnsetAfterBeingPreviouslySet() {
         assertThat(System.getProperty(PROPERTY_NAME)).isNull();
     }

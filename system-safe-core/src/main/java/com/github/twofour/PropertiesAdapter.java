@@ -16,8 +16,12 @@ public class PropertiesAdapter extends Properties {
 
     private static final ThreadLocalProperties THREAD_LOCAL_PROPERTIES = new ThreadLocalProperties();
 
-    public static void setContext(final Properties properties) {
-        THREAD_LOCAL_PROPERTIES.get().set(properties);
+    public static void addProperties(final Properties properties) {
+        THREAD_LOCAL_PROPERTIES.addProperties(properties);
+    }
+
+    public static void removeProperties() {
+        THREAD_LOCAL_PROPERTIES.removeProperties();
     }
 
     @Override
@@ -51,7 +55,7 @@ public class PropertiesAdapter extends Properties {
     }
 
     @Override
-    public synchronized void loadFromXML(InputStream in) throws IOException, InvalidPropertiesFormatException {
+    public synchronized void loadFromXML(InputStream in) throws IOException {
         getLocalProperties().loadFromXML(in);
     }
 
@@ -259,6 +263,6 @@ public class PropertiesAdapter extends Properties {
     }
 
     private Properties getLocalProperties() {
-        return requireNonNull(THREAD_LOCAL_PROPERTIES.get().get());
+        return requireNonNull(THREAD_LOCAL_PROPERTIES.getProperties());
     }
 }
