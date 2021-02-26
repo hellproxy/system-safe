@@ -8,6 +8,10 @@ dependencies {
     testImplementation "org.assertj:assertj-core:$assertJVersion"
 }
 
+compileTestJava {
+    dependsOn ':system-safe-core:publishToMavenLocal'
+}
+
 test {
     useJUnitPlatform()
 }

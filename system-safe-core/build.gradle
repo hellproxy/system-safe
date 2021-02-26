@@ -19,6 +19,14 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
+test {
+    useJUnitPlatform()
+}
+
+build {
+    finalizedBy publishToMavenLocal
+}
+
 publishing {
     publications {
         extension(MavenPublication) {
@@ -27,10 +35,4 @@ publishing {
             from components.java
         }
     }
-}
-
-tasks.build.dependsOn publishToMavenLocal
-
-test {
-    useJUnitPlatform()
 }
