@@ -46,22 +46,23 @@ example:
 
 ```java
 @Execution(CONCURRENT)
-@ExtendWith(SystemSafeExtension.class)
 class FruitTest {
 
     @Test
     void testApple() {
         System.setProperty("fruit", "apple");
-        assertThat(System.getProperty("fruit")).isEqualTo("apple");
+        Thread.sleep(100);
+        assertThat(System.getProperty("fruit")).isEqualTo("apple"); // will sometimes be "banana" (bad!)
     }
 
     @Test
     void testBanana() {
         System.setProperty("fruit", "banana");
-        assertThat(System.getProperty("fruit")).isEqualTo("banana");
+        Thread.sleep(100);
+        assertThat(System.getProperty("fruit")).isEqualTo("banana"); // will sometimes be "apple" (also bad!)
     }
 }
 ```
 
-Under normal circumstances, the above test would have a race condition when run in parallel. Running with System Safe
-gives each test its own sandboxed set of properties to play with.
+Under normal circumstances, the above test would have a race condition when run in parallel. Running with
+`SystemSafeExtension` prevents this by giving each test its own sandboxed set of properties to play with.
