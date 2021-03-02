@@ -41,7 +41,7 @@ Or you can add the extension to individual test classes:
 class MyTest {
 ```
 
-You should now be able to get and set System properties in your tests as if they were being run in isolation. For 
+You should now be able to get and set System Properties in your tests as if they were being run in isolation. For 
 example:
 
 ```java

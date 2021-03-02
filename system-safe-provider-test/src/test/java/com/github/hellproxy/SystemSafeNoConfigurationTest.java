@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author harrydent
- */
 @DisplayName("Test SystemSafeExtension is automatically configured using junit-platform.properties")
 class SystemSafeNoConfigurationTest {
 
@@ -17,7 +14,7 @@ class SystemSafeNoConfigurationTest {
 
     @Test
     @Order(1)
-    @DisplayName("check that System properties are a PropertiesAdapter instance")
+    @DisplayName("check that System Properties are a PropertiesAdapter instance")
     void test_systemProperties_isStubbed() {
         assertThat(System.getProperties()).isInstanceOf(PropertiesAdapter.class);
     }

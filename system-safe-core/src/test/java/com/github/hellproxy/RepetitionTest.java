@@ -8,12 +8,9 @@ import static java.lang.String.format;
 import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author harrydent
- */
 @Slf4j
 @ExtendWith(SystemSafeExtension.class)
-@DisplayName("Test System properties don't interact across repeated tests")
+@DisplayName("Test System Properties don't interact across repeated tests")
 class RepetitionTest {
 
     private static final String CLASS_SCOPE = "classScope";

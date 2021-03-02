@@ -6,15 +6,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author harrydent
- */
 @ExtendWith(SystemSafeExtension.class)
-@DisplayName("Test System properties have been stubbed")
+@DisplayName("Test System Properties have been stubbed")
 class StubbingTest {
 
     @Test
-    @DisplayName("check that System properties are a PropertiesAdapter instance")
+    @DisplayName("check that System Properties are a PropertiesAdapter instance")
     void test_systemProperties_isStubbed() {
         assertThat(System.getProperties()).isInstanceOf(PropertiesAdapter.class);
     }

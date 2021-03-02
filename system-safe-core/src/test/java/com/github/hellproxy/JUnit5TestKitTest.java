@@ -11,9 +11,6 @@ import java.util.HashMap;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
-/**
- * @author harrydent
- */
 @Slf4j
 @DisplayName("Test using JUnit5 test kit")
 class JUnit5TestKitTest {

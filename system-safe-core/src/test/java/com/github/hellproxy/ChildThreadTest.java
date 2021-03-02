@@ -17,9 +17,6 @@ import static java.util.stream.Collectors.toSet;
 import static java.util.stream.IntStream.range;
 import static org.assertj.core.api.Assertions.assertThat;
 
-/**
- * @author harrydent
- */
 @ExtendWith(SystemSafeExtension.class)
 @DisplayName("Test how properties are passed to spawned child threads")
 class ChildThreadTest {
