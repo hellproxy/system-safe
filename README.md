@@ -14,7 +14,7 @@ Coming soon to a repository near you:
 ### Maven
 ```xml
 <dependency>
-    <groupId>com.github.twofour</groupId>
+    <groupId>com.github.hellproxy</groupId>
     <artifactId>system-safe</artifactId>
     <version>1.0.0</version>
     <scope>test</scope>
@@ -23,7 +23,7 @@ Coming soon to a repository near you:
 
 ### Gradle
 ```groovy
-testImplementation 'com.github.twofour:system-safe:1.0.0'
+testImplementation 'com.github.hellproxy:system-safe:1.0.0'
 ```
 
 ## Usage

@@ -1,4 +1,4 @@
-package com.github.twofour;
+package com.github.hellproxy;
 
 import jdk.jfr.Description;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +8,6 @@ import org.junit.platform.testkit.engine.EngineTestKit;
 
 import java.util.HashMap;
 
-import static com.github.twofour.RepetitionTest.TOTAL_REPETITIONS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.platform.engine.discovery.DiscoverySelectors.selectClass;
 
@@ -32,7 +31,7 @@ class JUnit5TestKitTest {
                 .execute()
                 .testEvents()
                 .debug()
-                .assertStatistics(stats -> stats.started(TOTAL_REPETITIONS).succeeded(TOTAL_REPETITIONS));
+                .assertStatistics(stats -> stats.started(RepetitionTest.TOTAL_REPETITIONS).succeeded(RepetitionTest.TOTAL_REPETITIONS));
 
         var propertiesAfter = new HashMap<>(System.getProperties());
 

@@ -1,9 +1,9 @@
-package com.github.twofour;
+package com.github.hellproxy;
 
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static com.github.twofour.SystemSafeExtension.getInitialSystemProperties;
+import static com.github.hellproxy.SystemSafeExtension.getInitialSystemProperties;
 
 /**
  * @author harrydent

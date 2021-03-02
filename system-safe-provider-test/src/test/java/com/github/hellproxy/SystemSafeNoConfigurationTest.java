@@ -1,4 +1,5 @@
-import com.github.twofour.PropertiesAdapter;
+package com.github.hellproxy;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

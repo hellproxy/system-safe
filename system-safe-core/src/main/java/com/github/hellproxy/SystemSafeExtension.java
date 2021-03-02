@@ -1,4 +1,4 @@
-package com.github.twofour;
+package com.github.hellproxy;
 
 import org.junit.jupiter.api.extension.*;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;

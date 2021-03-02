@@ -1,4 +1,4 @@
-package com.github.twofour;
+package com.github.hellproxy;
 
 import java.util.Properties;
 
