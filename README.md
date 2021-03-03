@@ -9,8 +9,6 @@ SystemSafe is a hassle-free JUnit 5 extension that prevents unintended side effe
 
 ## Installation
 
-Coming soon to a repository near you:
-
 ### Maven
 ```xml
 <dependency>
