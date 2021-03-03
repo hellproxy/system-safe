@@ -1,6 +1,6 @@
 ![build](https://github.com/hellproxy/system-safe/actions/workflows/gradle.yml/badge.svg)
 ![coverage](https://img.shields.io/codecov/c/github/hellproxy/system-safe?token=JUMAE6HREY)
-
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hellproxy/system-safe/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hellproxy/system-safe)
 
 # SystemSafe
 
