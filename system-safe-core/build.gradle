@@ -1,6 +1,7 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id 'signing'
 }
 
 dependencies {
@@ -19,6 +20,12 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
+java {
+    archivesBaseName = 'system-safe'
+    withJavadocJar()
+    withSourcesJar()
+}
+
 test {
     useJUnitPlatform()
 }
@@ -29,10 +36,71 @@ build {
 
 publishing {
     publications {
-        extension(MavenPublication) {
+        mavenJava(MavenPublication) {
             artifactId = 'system-safe'
-
             from components.java
+
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = 'System Safe'
+                description = 'System Properties contextualization for JUnit 5'
+                url = 'https://github.com/hellproxy/system-safe'
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'hellproxy'
+                        name = 'Harry Dent'
+                        email = 'harry.j.e.dent@gmail.com'
+                    }
+                }
+                scm {
+                    url = 'https://github.com/hellproxy/system-safe'
+                    connection = 'scm:git:https://github.com/hellproxy/system-safe.git'
+                    developerConnection = 'scm:git:https://github.com/hellproxy/system-safe.git'
+                }
+            }
         }
     }
+    repositories {
+        maven {
+            name = 'OSSRH'
+            def releaseRepo = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+            def snapshotRepo = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+            url = isReleaseVersion ? releaseRepo : snapshotRepo
+            credentials {
+                username = project.properties["ossrhUsername"]
+                password = project.properties["ossrhPassword"]
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.mavenJava
+}
+
+javadoc {
+    if (JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
+}
+
+tasks.withType(GenerateModuleMetadata) {
+    enabled = false
+}
+
+tasks.withType(Sign) {
+    onlyIf { project.properties["signing.keyId"] }
 }
